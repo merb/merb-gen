@@ -1,11 +1,9 @@
 begin
-  require File.join(File.dirname(__FILE__), "gems/environment")
+  # Load the bundler environment from #{Merb.root}/gems/environment.rb
+  require File.join(File.dirname(__FILE__), "gems", "environment")
 rescue LoadError
-  begin 
-    require 'minigems'
-  rescue LoadError 
-    require 'rubygems'
-  end
+  # Default to using system rubygems if there's no bundle detected
+  require "rubygems"
 end
 
 require 'merb-core'

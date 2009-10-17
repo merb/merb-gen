@@ -1,5 +1,7 @@
 # Go to http://wiki.merbivore.com/pages/init-rb
  
+# Specify your dependencies in the Gemfile
+
 use_orm :datamapper
 use_test :<%= testing_framework %>
 use_template_engine :<%= template_engine %>

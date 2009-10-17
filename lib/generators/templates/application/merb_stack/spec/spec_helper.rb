@@ -1,6 +1,13 @@
-require "rubygems"
-require "merb-core"
+begin
+  # Load the bundler environment from #{Merb.root}/gems/environment.rb
+  require File.join(File.dirname(__FILE__), "..", "gems", "environment")
+rescue LoadError
+  # Default to using system rubygems if there's no bundle detected
+  require "rubygems"
+end
+
 require "spec" # Satisfies Autotest and anyone else not using the Rake tasks
+require "merb-core"
 
 # this loads all plugins required in your init file so don't add them
 # here again, Merb will do it for you

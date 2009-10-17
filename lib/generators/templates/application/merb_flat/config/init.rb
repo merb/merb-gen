@@ -4,8 +4,7 @@
 use_test :<%= testing_framework %>
 use_template_engine :<%= template_engine %>
 
-# Specify a specific version of a dependency
-# dependency "RedCloth", "> 3.0"
+# Specify your dependencies in the Gemfile
 
 Merb::BootLoader.before_app_loads do
   # This will get executed after dependencies have been loaded but before your app's classes have loaded.

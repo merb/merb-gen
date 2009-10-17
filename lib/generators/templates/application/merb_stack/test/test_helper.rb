@@ -1,9 +1,9 @@
-require "rubygems"
-
-# Add the local gems dir if found within the app root; any dependencies loaded
-# hereafter will try to load from the local gems before loading system gems.
-if (local_gem_dir = File.join(File.dirname(__FILE__), '..', 'gems')) && $BUNDLE.nil?
-  $BUNDLE = true; Gem.clear_paths; Gem.path.unshift(local_gem_dir)
+begin
+  # Load the bundler environment from #{Merb.root}/gems/environment.rb
+  require File.join(File.dirname(__FILE__), "..", "gems", "environment")
+rescue LoadError
+  # Default to using system rubygems if there's no bundle detected
+  require "rubygems"
 end
 
 require "merb-core"
