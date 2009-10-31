@@ -1,9 +1,17 @@
-$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+require "rubygems"
 
-require 'rubygems'
-require 'spec'
+# Use current merb-core sources if running from a typical dev checkout.
+lib = File.expand_path('../../../merb-core/lib', __FILE__)
+$LOAD_PATH.unshift(lib) if File.directory?(lib)
 require 'merb-core'
-require 'merb-gen'
+
+# The lib under test
+require "merb-gen"
+
+# Satisfies Autotest and anyone else not using the Rake tasks
+require 'spec'
+
+# Templater spec support
 require 'templater/spec/helpers'
 
 Merb.disable(:initfile)
