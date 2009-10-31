@@ -1,78 +1,67 @@
-require File.expand_path(File.join(File.dirname(__FILE__), "..", "rake_helpers"))
+require 'rubygems'
+require 'rake'
 
-##############################################################################
-# Package && release
-##############################################################################
-RUBY_FORGE_PROJECT  = "merb"
-PROJECT_URL         = "http://merbivore.com"
-PROJECT_SUMMARY     = "Generators suite for Merb."
-PROJECT_DESCRIPTION = PROJECT_SUMMARY
+# Assume a typical dev checkout to fetch the current merb-core version
+require File.expand_path('../../merb-core/lib/merb-core/version', __FILE__)
 
-GEM_AUTHOR = "Jonas Nicklas"
-GEM_EMAIL  = "jonas.nicklas@gmail.com"
+# Load this library's version information
+require File.expand_path('../lib/merb-gen/version', __FILE__)
 
-GEM_NAME    = "merb-gen"
-PKG_BUILD   = ENV['PKG_BUILD'] ? '.' + ENV['PKG_BUILD'] : ''
-GEM_VERSION = Merb::VERSION + PKG_BUILD
+begin
 
-RELEASE_NAME    = "REL #{GEM_VERSION}"
+  require 'jeweler'
 
-require "extlib/tasks/release"
+  Jeweler::Tasks.new do |gemspec|
 
-spec = Gem::Specification.new do |s|
-  s.rubyforge_project = RUBY_FORGE_PROJECT
-  s.name = GEM_NAME
-  s.version = GEM_VERSION
-  s.platform = Gem::Platform::RUBY
-  s.has_rdoc = true
-  s.extra_rdoc_files = ["README", "LICENSE", 'TODO']
-  s.summary = PROJECT_SUMMARY
-  s.description = PROJECT_DESCRIPTION
-  s.author = GEM_AUTHOR
-  s.email = GEM_EMAIL
-  s.homepage = PROJECT_URL
-  s.bindir = "bin"
-  s.executables = %w( merb-gen )
+    gemspec.version     = Merb::Generators::VERSION
 
-  s.add_dependency "merb-core", ">= #{Merb::VERSION}"
-  s.add_dependency "templater", ">= 1.0.0"
+    gemspec.name        = "merb-gen"
+    gemspec.description = "Merb plugin containing useful code generators"
+    gemspec.summary     = "Merb plugin that provides a suite of code generators for Merb."
 
-  s.require_path = 'lib'
-  s.files = %w(LICENSE README Rakefile TODO) + Dir.glob("{lib,bin,spec,merb}/**/*")
-end
+    gemspec.authors     = [ "Jonas Nicklas" ]
+    gemspec.email       = "jonas.nicklas@gmail.com"
+    gemspec.homepage    = "http://merbivore.com/"
 
-Rake::GemPackageTask.new(spec) do |pkg|
-  pkg.gem_spec = spec
-end
+    gemspec.files       = %w(LICENSE Rakefile README TODO) + Dir['{bin,lib,spec}/**/*']
 
-desc "Install the gem"
-task :install do
-  Merb::RakeHelper.install(GEM_NAME, :version => GEM_VERSION)
-end
+    # Runtime dependencies
+    gemspec.add_dependency('merb-core', "~> #{Merb::VERSION}")
+    gemspec.add_dependency "templater", ">= 1.0.0"
 
-desc "Uninstall the gem"
-task :uninstall do
-  Merb::RakeHelper.uninstall(GEM_NAME, :version => GEM_VERSION)
-end
+    # Development dependencies
+    gemspec.add_development_dependency 'rspec', '>= 1.2.9'
 
-desc "Create a gemspec file"
-task :gemspec do
-  File.open("#{GEM_NAME}.gemspec", "w") do |file|
-    file.puts spec.to_ruby
+    # Executable files
+    gemspec.executables = 'merb-gen'
+
   end
+
+  Jeweler::GemcutterTasks.new
+
+rescue LoadError
+  puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
 end
 
-desc "Run all examples (or a specific spec with TASK=xxxx)"
-Spec::Rake::SpecTask.new('spec') do |t|
-  t.spec_opts  = ["-cfs"]
-  t.spec_files = begin
-    if ENV["TASK"] 
-      ENV["TASK"].split(',').map { |task| "spec/**/#{task}_spec.rb" }
-    else
-      FileList['spec/**/*_spec.rb']
-    end
-  end
+require 'spec/rake/spectask'
+Spec::Rake::SpecTask.new(:spec) do |spec|
+  spec.spec_opts << '--options' << 'spec/spec.opts' if File.exists?('spec/spec.opts')
+  spec.libs << 'lib' << 'spec'
+  spec.spec_files = FileList['spec/**/*_spec.rb']
 end
 
-desc 'Default: run spec examples'
-task :default => 'spec'
+Spec::Rake::SpecTask.new(:rcov) do |spec|
+  spec.libs << 'lib' << 'spec'
+  spec.pattern = 'spec/**/*_spec.rb'
+  spec.rcov = true
+end
+
+task :default => :spec
+
+require 'rake/rdoctask'
+Rake::RDocTask.new do |rdoc|
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title = "test_gem #{Merb::Generators::VERSION}"
+  rdoc.rdoc_files.include('README*')
+  rdoc.rdoc_files.include('lib/**/*.rb')
+end
