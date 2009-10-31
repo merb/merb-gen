@@ -2,31 +2,29 @@ require 'merb-core'
 require 'digest/sha1'
 require 'templater'
 
-path = File.join(File.dirname(__FILE__))
+require 'merb-gen/templater'
+require 'merb-gen/generator'
+require 'merb-gen/named_generator'
+require 'merb-gen/namespaced_generator'
+require 'merb-gen/app_generator'
+require 'generators/merb/merb_stack'
+require 'generators/merb/merb_core'
+require 'generators/merb/merb_flat'
+require 'generators/merb/merb_very_flat'
+require 'generators/merb_plugin'
+require 'generators/controller'
+require 'generators/helper'
+require 'generators/part_controller'
+require 'generators/migration'
+require 'generators/session_migration'
+require 'generators/model'
+require 'generators/resource_controller'
+require 'generators/resource'
+require 'generators/layout'
+require 'generators/passenger'
+require 'generators/fcgi'
 
-require path / "merb-gen"   / "templater"
-require path / "merb-gen"   / "generator"
-require path / "merb-gen"   / "named_generator"
-require path / "merb-gen"   / "namespaced_generator"
-require path / "merb-gen"   / "app_generator"
-require path / "generators" / "merb" / "merb_stack"
-require path / "generators" / "merb" / "merb_core"
-require path / "generators" / "merb" / "merb_flat"
-require path / "generators" / "merb" / "merb_very_flat"
-require path / "generators" / "merb_plugin"
-require path / "generators" / "controller"
-require path / "generators" / "helper"
-require path / "generators" / "part_controller"
-require path / "generators" / "migration"
-require path / "generators" / "session_migration"
-require path / "generators" / "model"
-require path / "generators" / "resource_controller"
-require path / "generators" / "resource"
-require path / "generators" / "layout"
-require path / "generators" / "passenger"
-require path / "generators" / "fcgi"
-
-Templater::Discovery.discover!("merb-gen")
+Templater::Discovery.discover!('merb-gen')
 
 Merb.generators.each do |file|
   require file
