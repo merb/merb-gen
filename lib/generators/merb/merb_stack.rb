@@ -1,3 +1,5 @@
+require 'merb-gen/version'
+
 module Merb
   module Generators
     class MerbStackGenerator < AppGenerator
@@ -81,11 +83,11 @@ module Merb
       file :passenger_config, "config.ru"
 
       def dm_gems_version
-        Merb::DM_VERSION
+        Merb::Generators::DM_VERSION_REQUIREMENT
       end
       
       def do_gems_version
-        Merb::DO_VERSION
+        Merb::Generators::DO_VERSION_REQUIREMENT
       end
       
       # empty array means all files are considered to be just
