@@ -54,7 +54,7 @@ class Autotest::MerbRspec < Autotest
 
     # Changes to a view cause its spec to be run
     add_mapping %r%^app/views/(.*)/% do |_, m|
-      spec_for(m[1], 'view')
+      spec_for(m[1], 'request')
     end
 
     # Changes to a controller result in its corresponding spec being run. If
@@ -62,15 +62,15 @@ class Autotest::MerbRspec < Autotest
     # controller specs are run.
     add_mapping %r%^app/controllers/(.*)\.rb$% do |_, m|
       if ["application", "exception"].include?(m[1])
-        files_matching %r%^spec/controllers/.*_spec\.rb$%
+        files_matching %r%^spec/requests/.*_spec\.rb$%
       else
-        spec_for(m[1], 'controller')
+        spec_for(m[1], 'request')
       end
     end
 
     # If a change is made to the router, run controller, view and helper specs
     add_mapping %r%^config/router.rb$% do
-      files_matching %r%^spec/(controllers|views|helpers)/.*_spec\.rb$%
+      files_matching %r%^spec/(views|controllers|helpers|requests)/.*_spec\.rb$%
     end
 
     # If any of the major files governing the environment are altered, run
@@ -157,9 +157,9 @@ private
   # String
   #
   # ==== Example
-  #   > spec_for('post', :view')
-  #   => "spec/views/post_spec.rb"
+  #   > spec_for('post', :model')
+  #   => "spec/models/post_spec.rb"
   def spec_for(match, kind)
-    File.join("spec", kind + 's', "#{match}_spec.rb")
+    files_matching %r%^spec/#{kind}s/#{match}(/.*)?_spec.rb$%
   end
 end
