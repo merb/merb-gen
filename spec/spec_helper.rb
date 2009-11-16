@@ -23,8 +23,10 @@ end
 describe "app generator", :shared => true do
   
   describe "#gems_for_orm" do
-    it "should generate DSL for ORM plugin" do
-      @generator.gems_for_orm(:sequel).should == 'gem "merb_sequel"'
+    [:activerecord, :sequel, :datamapper].each do |orm|
+      it "should generate DSL for #{orm} ORM plugin" do
+        @generator.gems_for_orm(orm).should == %Q{gem "merb_#{orm}"}
+      end
     end
 
     it "should not generate DSL if we don't use ORM" do
@@ -33,9 +35,10 @@ describe "app generator", :shared => true do
   end
 
   describe "#gems_for_template_engine" do
-    it "should generate DSL for template engine plugin" do
-      @generator.gems_for_template_engine(:haml).should == 'gem "merb-haml"'
-      @generator.gems_for_template_engine(:builder).should == 'gem "merb-builder"'
+    [:haml, :builder].each do |engine|
+      it "should generate DSL for #{engine} template engine plugin" do
+        @generator.gems_for_template_engine(engine).should == %Q{gem "merb-#{engine}"}
+      end
     end
 
     it "should generate DSL for template engine plugins other than haml and builder" do
