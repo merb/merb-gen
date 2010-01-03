@@ -7,22 +7,26 @@ require 'merb-gen/generator'
 require 'merb-gen/named_generator'
 require 'merb-gen/namespaced_generator'
 require 'merb-gen/app_generator'
-require 'generators/merb/merb_stack'
-require 'generators/merb/merb_core'
-require 'generators/merb/merb_flat'
-require 'generators/merb/merb_very_flat'
-require 'generators/merb_plugin'
-require 'generators/controller'
-require 'generators/helper'
-require 'generators/part_controller'
-require 'generators/migration'
-require 'generators/session_migration'
-require 'generators/model'
-require 'generators/resource_controller'
-require 'generators/resource'
-require 'generators/layout'
-require 'generators/passenger'
-require 'generators/fcgi'
+
+# TODO Look at how templater handles generators that don't reside
+# in the toplevel rubygems 'namespace'
+
+require File.expand_path('../generators/merb/merb_stack',     __FILE__)
+require File.expand_path('../generators/merb/merb_core',      __FILE__)
+require File.expand_path('../generators/merb/merb_flat',      __FILE__)
+require File.expand_path('../generators/merb/merb_very_flat', __FILE__)
+require File.expand_path('../generators/merb_plugin',         __FILE__)
+require File.expand_path('../generators/controller',          __FILE__)
+require File.expand_path('../generators/helper',              __FILE__)
+require File.expand_path('../generators/part_controller',     __FILE__)
+require File.expand_path('../generators/migration',           __FILE__)
+require File.expand_path('../generators/session_migration',   __FILE__)
+require File.expand_path('../generators/model',               __FILE__)
+require File.expand_path('../generators/resource_controller', __FILE__)
+require File.expand_path('../generators/resource',            __FILE__)
+require File.expand_path('../generators/layout',              __FILE__)
+require File.expand_path('../generators/passenger',           __FILE__)
+require File.expand_path('../generators/fcgi',                __FILE__)
 
 Templater::Discovery.discover!('merb-gen')
 
