@@ -52,7 +52,7 @@ describe "app generator", :shared => true do
 
   describe "#gems_for_testing_framework" do
     it "should generate DSL for testing framework plugin" do
-      @generator.gems_for_testing_framework(:test_unit).should == 'gem "test_unit", :only => :test'
+      @generator.gems_for_testing_framework(:test_unit).should == 'gem "test_unit", :group => :test'
     end
 
     it "should not generate DSL if we use rspec" do

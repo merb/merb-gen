@@ -15,6 +15,10 @@ describe Merb::Generators::MerbCoreGenerator do
       @generator.should create('/tmp/testing/Gemfile')
     end
     
+    it "should create an bin/merb" do
+      @generator.should create('/tmp/testing/bin/merb')
+    end
+
     it "should create an init.rb" do
       @generator.should create('/tmp/testing/config/init.rb')
     end

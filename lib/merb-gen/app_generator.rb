@@ -63,7 +63,7 @@ module Merb
       # ==== Returns
       # String:: Gem dependencies
       def gems_for_testing_framework(testing_framework)
-        testing_framework == :rspec ? '' : %Q{gem "#{testing_framework}", :only => :test}  
+        testing_framework == :rspec ? '' : %Q{gem "#{testing_framework}", :group => :test}  
       end
 
     end

@@ -15,6 +15,10 @@ describe Merb::Generators::MerbStackGenerator do
       @generator.should create('/tmp/testing/Gemfile')
     end
 
+    it "should create an bin/merb" do
+      @generator.should create('/tmp/testing/bin/merb')
+    end
+
     it "should create a passenger config file" do
       @generator.should create('/tmp/testing/config.ru')
     end

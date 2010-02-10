@@ -1,9 +1,11 @@
 begin
-  # Load the bundler environment from #{Merb.root}/gems/environment.rb
-  require File.join(File.dirname(__FILE__), "..", "gems", "environment")
+  # Just in case the bundle was locked
+  # This shouldn't happen in a dev environment but lets be safe
+  require File.expand_path('../.bundle/environment', __FILE__)
 rescue LoadError
-  # Default to using system rubygems if there's no bundle detected
-  require "rubygems"
+  require 'rubygems'
+  require 'bundler'
+  Bundler.setup
 end
 
 require "spec" # Satisfies Autotest and anyone else not using the Rake tasks

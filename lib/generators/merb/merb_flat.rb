@@ -44,7 +44,11 @@ module Merb
       # ==== Common directories & files
       #
 
-      empty_directory :gems, 'gems'
+      empty_directory :bin, 'bin'
+      template :merb do |template|
+        template.source = File.join(common_templates_dir, "merb")
+        template.destination = "bin/merb"
+      end
 
       template :gemfile do |template|
         template.source = File.join(common_templates_dir, "Gemfile")

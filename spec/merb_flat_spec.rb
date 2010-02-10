@@ -14,6 +14,10 @@ describe Merb::Generators::MerbFlatGenerator do
     it "should create an Gemfile" do
       @generator.should create('/tmp/testing/Gemfile')
     end
+
+    it "should create an bin/merb" do
+      @generator.should create('/tmp/testing/bin/merb')
+    end
     
     it "should create a number of views"
     
