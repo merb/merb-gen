@@ -1,4 +1,5 @@
 require 'merb-core'
+
 require 'digest/sha1'
 require 'templater'
 
