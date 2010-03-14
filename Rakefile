@@ -14,7 +14,7 @@ begin
 
   Jeweler::Tasks.new do |gemspec|
 
-    gemspec.version     = Merb::Generators::VERSION
+    gemspec.version     = Merb::Generators::VERSION.dup
 
     gemspec.name        = "merb-gen"
     gemspec.description = "Merb plugin containing useful code generators"
