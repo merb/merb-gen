@@ -2,7 +2,7 @@
 use Rack::Head
 
 # Correctly set a content length.
-use Merb::Rack::ContentLength
+use Rack::ContentLength
 
 # use PathPrefix Middleware if :path_prefix is set in Merb::Config
 if prefix = ::Merb::Config[:path_prefix]
