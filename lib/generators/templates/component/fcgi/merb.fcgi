@@ -1,12 +1,4 @@
 #!/usr/bin/env ruby
-begin
-  # Load the bundler environment from #{Merb.root}/gems/environment.rb
-  require File.join(File.dirname(__FILE__), "..", "gems", "environment")
-rescue LoadError
-  # Default to using system rubygems if there's no bundle detected
-  require "rubygems"
-end
-
 require 'merb-core'
 
 # this is Merb.root, change this if you have some funky setup.

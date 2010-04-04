@@ -1,13 +1,3 @@
-begin
-  # Just in case the bundle was locked
-  # This shouldn't happen in a dev environment but lets be safe
-  require '.bundle/environment'
-rescue LoadError
-  require 'rubygems'
-  require 'bundler'
-  Bundler.setup
-end
-
 require 'rake/rdoctask'
 
 require 'merb-core'

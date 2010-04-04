@@ -1,13 +1,3 @@
-begin
-  # Just in case the bundle was locked
-  # This shouldn't happen in a dev environment but lets be safe
-  require File.expand_path('../.bundle/environment', __FILE__)
-rescue LoadError
-  require 'rubygems'
-  require 'bundler'
-  Bundler.setup
-end
-
 require "merb-core"
 
 # TODO: Boot Merb, via the Test Rack adapter
