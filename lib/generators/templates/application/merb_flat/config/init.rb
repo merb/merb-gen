@@ -1,8 +1,9 @@
 # Go to http://wiki.merbivore.com/pages/init-rb
 
-<%= "use_orm :#{orm}" unless orm == :none %>
+# Specify your dependencies in the Gemfile but require them explicitly
+<%= "require 'merb_#{orm}'" unless orm == :none %>
 use_test :<%= testing_framework %>
-use_template_engine :<%= template_engine %>
+<%= "require 'merb-haml'" if template_engine == :haml %>
 
 # Specify your dependencies in the Gemfile
 

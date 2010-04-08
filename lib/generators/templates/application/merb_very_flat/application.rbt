@@ -1,13 +1,13 @@
 # run very flat apps with merb -I <app file>.
 
 # Uncomment for DataMapper ORM
-<%= "# " unless orm == :datamapper %>use_orm :datamapper
+<%= "# " unless orm == :datamapper %>require 'merb_datamapper'
 
 # Uncomment for ActiveRecord ORM
-<%= "# " unless orm == :activerecord %>use_orm :activerecord
+<%= "# " unless orm == :activerecord %>require 'merb_activerecord'
 
 # Uncomment for Sequel ORM
-<%= "# " unless orm == :sequel %>use_orm :sequel
+<%= "# " unless orm == :sequel %>require 'merb_sequel'
 
 
 #
@@ -29,9 +29,7 @@
 #
 
 # Merb can generate views for different template engines, choose your favourite as the default.
-
-<%= "# " unless template_engine == :erb %>use_template_engine :erb
-<%= "# " unless template_engine == :haml %>use_template_engine :haml
+<%= "# " unless template_engine == :haml %>require 'merb-haml'
 
 Merb::Config.use { |c|
   c[:framework]           = { :public => [Merb.root / "public", nil] }
