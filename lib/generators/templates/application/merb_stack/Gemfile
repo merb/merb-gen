@@ -34,6 +34,9 @@ gem("merb-cache", merb_gems_version) do
   end
 end
 
+# Change to server of your choice
+gem "thin"
+
 gem "data_objects",             do_gems_version
 gem "do_sqlite3",               do_gems_version # If using another database, replace this
 gem "dm-core",                  dm_gems_version
@@ -48,3 +51,4 @@ gem "dm-constraints",           dm_gems_version
 gem "merb_datamapper",          merb_gems_version
 <%= gems_for_template_engine(template_engine) %>
 <%= gems_for_testing_framework(testing_framework) %>
+

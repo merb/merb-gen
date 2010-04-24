@@ -9,6 +9,10 @@ merb_gems_version = "<%= merb_gems_version %>"
 gem "json_pure", ">= 1.1.7", :require => "json"
 gem "merb-core", merb_gems_version
 
+# Change to server of your choice
+gem "thin"
+
 <%= gems_for_orm(orm) %>
 <%= gems_for_template_engine(template_engine) %>
 <%= gems_for_testing_framework(testing_framework) %>
+
