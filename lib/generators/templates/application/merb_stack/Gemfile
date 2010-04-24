@@ -1,3 +1,5 @@
+source :rubygems
+
 # Dependencies are generated using a strict version,
 # Don't forget to edit the dependency versions when upgrading.
 
