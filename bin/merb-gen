@@ -2,4 +2,17 @@
 
 require 'merb-gen'
 
+begin
+  # Just in case the bundle was locked
+  # This shouldn't happen in a dev environment but lets be safe
+  require '.bundle/environment'
+rescue LoadError
+  begin
+    require 'rubygems'
+    require 'bundler'
+    Bundler.setup
+  rescue Bundler::GemfileNotFound
+  end
+end
+
 Merb::Generators.run_cli(Dir.pwd, 'merb-gen', Merb::VERSION, ARGV)
