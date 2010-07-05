@@ -37,9 +37,8 @@ end
 # Change to server of your choice
 gem "thin"
 
-gem "data_objects",             do_gems_version
-gem "do_sqlite3",               do_gems_version # If using another database, replace this
 gem "dm-core",                  dm_gems_version
+gem "dm-sqlite-adapter",        dm_gems_version # change as appropriate
 gem "dm-aggregates",            dm_gems_version
 gem "dm-migrations",            dm_gems_version
 gem "dm-timestamps",            dm_gems_version
