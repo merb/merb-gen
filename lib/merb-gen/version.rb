@@ -1,7 +1,7 @@
 module Merb
   module Generators
 
-    VERSION = '1.1.2'.freeze
+    VERSION = '1.1.3'.freeze
 
     # Duplicated here (originally in merb_datamapper)
     # This is currently the easiest way to get at the
