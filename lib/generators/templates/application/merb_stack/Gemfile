@@ -4,8 +4,8 @@ source :rubygems
 # Don't forget to edit the dependency versions when upgrading.
 
 merb_gems_version = "<%= merb_gems_version %>"
+merb_related_gems = "~> 1.1.0"
 dm_gems_version   = "<%= dm_gems_version %>"
-do_gems_version   = "<%= do_gems_version %>"
 
 # If you did disable json for Merb, comment out this line.
 # Don't use json gem version lower than 1.1.7! Older version have a security bug
@@ -21,9 +21,6 @@ gem "merb-assets",              merb_gems_version
 gem "merb-helpers",             merb_gems_version
 gem "merb-mailer",              merb_gems_version
 gem "merb-slices",              merb_gems_version
-gem "merb-auth-core",           merb_gems_version
-gem "merb-auth-more",           merb_gems_version
-gem "merb-auth-slice-password", merb_gems_version
 gem "merb-param-protection",    merb_gems_version
 gem "merb-exceptions",          merb_gems_version
 gem "merb-gen",                 merb_gems_version
@@ -33,6 +30,10 @@ gem("merb-cache", merb_gems_version) do
     register(Merb::Cache::FileStore) unless Merb.cache
   end
 end
+
+gem "merb-auth-core",           merb_related_gems
+gem "merb-auth-more",           merb_related_gems
+gem "merb-auth-slice-password", merb_related_gems
 
 # Change to server of your choice
 gem "thin"
@@ -47,7 +48,7 @@ gem "dm-validations",           dm_gems_version
 gem "dm-serializer",            dm_gems_version
 gem "dm-constraints",           dm_gems_version
 
-gem "merb_datamapper",          merb_gems_version
+gem "merb_datamapper",          merb_related_gems
 <%= gems_for_template_engine(template_engine) %>
 <%= gems_for_testing_framework(testing_framework) %>
 
