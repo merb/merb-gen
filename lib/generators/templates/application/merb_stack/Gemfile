@@ -48,7 +48,7 @@ gem "dm-validations",           dm_gems_version
 gem "dm-serializer",            dm_gems_version
 gem "dm-constraints",           dm_gems_version
 
-gem "merb_datamapper",          merb_gems_version
+<%= gems_for_orm(orm) %>
 <%= gems_for_template_engine(template_engine) %>
 <%= gems_for_testing_framework(testing_framework) %>
 
