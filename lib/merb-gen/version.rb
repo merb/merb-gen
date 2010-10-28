@@ -13,5 +13,7 @@ module Merb
     # Necessary to supply builtin support for do_sqlite3
     DO_VERSION_REQUIREMENT = '~> 1.0'.freeze
 
+    # merb-auth has separate versioning scheme as well
+    AUTH_VERSION_REQUIREMENT = '~> 1.0'.freeze
   end
 end

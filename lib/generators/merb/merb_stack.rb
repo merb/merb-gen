@@ -93,6 +93,10 @@ module Merb
       def do_gems_version
         Merb::Generators::DO_VERSION_REQUIREMENT
       end
+
+      def merb_auth_gems_version
+        Merb::Generators::AUTH_VERSION_REQUIREMENT
+      end
       
       # empty array means all files are considered to be just
       # files, not templates
