@@ -2,8 +2,8 @@ module Merb
   module Generators
 
     class NamedGenerator < Generator
-      # NOTE: Currently this is not inherited, it will have to be declared in each generator
-      # that inherits from this.
+      # @note Currently this is not inherited, it will have to be declared
+      #   in each generator that inherits from this.
       first_argument :name, :required => true
       
       def initialize(*args)

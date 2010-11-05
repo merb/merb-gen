@@ -8,37 +8,32 @@ module Merb
         super
       end
 
-      # Helper to get Merb version
+      # Helper to get Merb version.
       #
-      # ==== Returns
-      # String:: Merb version
+      # @return [String] Merb version.
       def merb_gems_version
         Merb::VERSION
       end
 
-      # ORM gem dependencies
+      # ORM gem dependencies.
       #
-      # Adds ORM plugin dependency 'merb_#{orm}' if we use any ORM.
+      # Adds ORM plugin dependency `'merb_#{orm}'` if we use any ORM.
       #
-      # ==== Params
-      # orm<Symbol>:: ORM to use 
+      # @param [Symbol] orm ORM to use.
       #
-      # ==== Returns
-      # String:: Gem dependencies
+      # @return [String] Gem dependencies.
       def gems_for_orm(orm)
         orm.to_sym == :none ? '' : %Q{gem "merb_#{orm}"}
       end
 
-      # Template enging gem dependencies
+      # Template enging gem dependencies.
       #
-      # When using something else than erb we add merb plugin 
+      # When using something else than erb we add merb plugin
       # dependency for the template engine.
       #
-      # ==== Params
-      # template_engine<Symbol>:: Template engine to use 
+      # @param [Symbol] template_engine Template engine to use.
       #
-      # ==== Returns
-      # String:: Gem dependencies
+      # @return [String] Gem dependencies.
       def gems_for_template_engine(template_engine)
         gems = ''
         if template_engine != :erb
@@ -52,16 +47,14 @@ module Merb
         gems
       end
 
-      # Testing framework gem dependencies
+      # Testing framework gem dependencies.
       #
-      # If we use any other test framework than RSpec we must add dependency 
+      # If we use any other test framework than RSpec we must add dependency
       # to the Gemfile. Merb depends on the RSpec so it's default dependency.
       #
-      # ==== Params
-      # test_framework<Symbol>:: Testing framework to use 
+      # @param [Symbol] test_framework Testing framework to use.
       #
-      # ==== Returns
-      # String:: Gem dependencies
+      # @return [String] Gem dependencies.
       def gems_for_testing_framework(testing_framework)
         %Q{gem "#{testing_framework}", :group => :test}
       end

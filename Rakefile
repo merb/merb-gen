@@ -19,10 +19,18 @@ end
 
 task :default => :spec
 
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "test_gem #{Merb::Generators::VERSION}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
+task :doc => [:yard]
+begin
+  require 'yard'
+
+  YARD::Rake::YardocTask.new do |t|
+    t.files   = [File.join('lib', '**', '*.rb'), '-', File.join('docs', '*.mkd')]
+    t.options = [
+      '--output-dir', 'doc/yard',
+      '--tag', 'overridable:Overridable',
+      '--markup', 'markdown',
+      '--exclude', '/generators/'
+    ]
+  end
+rescue
 end
