@@ -19,10 +19,9 @@ Gem::Specification.new do |gem|
   gem.description = 'Merb plugin containing useful code generators'
   gem.summary     = 'Merb plugin that provides a suite of code generators for Merb.'
 
-  gem.has_rdoc = true 
+  gem.has_rdoc = 'yard'
   gem.require_paths = ['lib']
-  gem.extra_rdoc_files = ['README', 'LICENSE', 'TODO']
-  gem.files = Dir['Rakefile', '{bin,lib,spec}/**/*', 'README*', 'LICENSE*', 'TODO*'] & `git ls-files -z`.split("\0")
+  gem.files = Dir['Rakefile', '{bin,lib,spec,docs}/**/*', 'README*', 'LICENSE*', 'TODO*'] & `git ls-files -z`.split("\0")
 
   # Runtime dependencies
   gem.add_dependency 'merb-core', "~> #{Merb::VERSION}"
