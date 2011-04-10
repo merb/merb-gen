@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 module Merb
   module Generators
     class MerbFlatGenerator < AppGenerator

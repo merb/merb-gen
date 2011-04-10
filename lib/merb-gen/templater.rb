@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 module Templater
   module Actions
     class Directory < File

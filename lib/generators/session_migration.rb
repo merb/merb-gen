@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 module Merb::Generators
   
   class SessionMigrationGenerator < Generator

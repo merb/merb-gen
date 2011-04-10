@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'merb-gen/version'
 
 module Merb

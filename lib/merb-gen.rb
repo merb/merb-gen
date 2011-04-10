@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'merb-core'
 
 require 'digest/sha1'
