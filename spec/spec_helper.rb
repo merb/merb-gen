@@ -9,18 +9,18 @@ require 'merb-core'
 require "merb-gen"
 
 # Satisfies Autotest and anyone else not using the Rake tasks
-require 'spec'
+require 'rspec'
 
 # Templater spec support
 require 'templater/spec/helpers'
 
 Merb.disable(:initfile)
 
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   config.include Templater::Spec::Helpers
 end
 
-describe "app generator", :shared => true do
+shared_examples_for "app generator" do
   
   describe "#gems_for_orm" do
     [:activerecord, :sequel, :datamapper].each do |orm|
@@ -61,7 +61,7 @@ describe "app generator", :shared => true do
   end
 end
 
-describe "named generator", :shared => true do
+shared_examples_for "named generator" do
 
   describe '#file_name' do
 
