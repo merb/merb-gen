@@ -2,6 +2,10 @@
 
 merb-gen provides application, plugin, and component generators for Merb.
 
+**Note:** this gem requires templater 1.1.0, which is not an officially
+released version at the time of writing. You can get the source from
+[the forked github repo](https://github.com/ngollan/templater).
+
 ## Usage
 
 To generate directory structure for a new merb app, run

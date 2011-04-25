@@ -9,6 +9,8 @@ require 'merb-gen/named_generator'
 require 'merb-gen/namespaced_generator'
 require 'merb-gen/app_generator'
 
+require 'merb-gen/core_ext/string'
+
 # TODO Look at how templater handles generators that don't reside
 # in the toplevel rubygems 'namespace'
 

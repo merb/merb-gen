@@ -65,7 +65,7 @@ module Merb::Generators
     end
     
     def plural_model
-      class_name.snake_case
+      class_name.underscore
     end
     
     def singular_model
@@ -73,7 +73,7 @@ module Merb::Generators
     end
     
     def resource_path
-      chunks.map{ |c| c.snake_case }.join('/')
+      chunks.map{ |c| c.underscore }.join('/')
     end
     
     # TODO: fix this for Datamapper, so that it returns the primary keys for the model

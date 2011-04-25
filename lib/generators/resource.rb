@@ -29,7 +29,7 @@ module Merb::Generators
     end
 
     def after_generation
-      STDOUT << message("resources :#{model_name.pluralize.snake_case} route added to config/router.rb")
+      STDOUT << message("resources :#{model_name.pluralize.underscore} route added to config/router.rb")
     end
   end
   

@@ -47,7 +47,7 @@ describe Merb::Generators::MerbStackGenerator do
 
     it "should render templates successfully" do
       lambda do 
-        @generator.render! 
+        @generator.render!
       end.should_not raise_error
     end
 

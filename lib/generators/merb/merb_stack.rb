@@ -68,11 +68,6 @@ module Merb
         file.destination = ".gitignore"
       end
 
-      file :jquery do |file|
-        file.source = File.join(common_templates_dir, 'jquery.js')
-        file.destination = 'public/javascripts/jquery.js'
-      end
-
       directory :test_dir do |directory|
         dir = testing_framework == :rspec ? "spec" : "test"
 

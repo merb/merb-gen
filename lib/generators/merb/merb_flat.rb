@@ -84,7 +84,7 @@ module Merb
       glob! "views"
 
       def class_name
-        self.name.gsub("-", "_").camel_case
+        self.name.gsub("-", "_").camelize
       end
     end
 

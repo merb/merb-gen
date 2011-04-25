@@ -17,15 +17,15 @@ module Merb::Generators
     second_argument :attributes, :as => :hash, :default => {}
     
     def table_name
-      self.name.snake_case.pluralize
+      self.name.underscore.pluralize
     end
     
     def class_name
-      "#{self.name.camel_case}Migration"
+      "#{self.name.camelize}Migration"
     end
 
     def migration_name
-      self.name.snake_case
+      self.name.underscore
     end
     
     def file_name
