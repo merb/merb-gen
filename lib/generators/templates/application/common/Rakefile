@@ -22,11 +22,14 @@ task :merb_env do
 end
 
 <% if testing_framework.to_sym == :rspec %>
-require 'rspec/core/rake_task'
-require 'merb-core/test/tasks/spectasks'
+begin
+  require 'merb-core/test/tasks/spectasks'
 
-desc 'Default: run spec examples'
-task :default => 'spec'
+  desc 'Default: run spec examples'
+  task :default => 'spec'
+rescue
+  "Install rspec (>= 2.5) for spec tasks."
+end
 <% elsif testing_framework.to_sym == :test_unit %>
 require 'rake/testtask'
 <% end %>

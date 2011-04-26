@@ -70,6 +70,11 @@ module Merb
         file.destination = ".gitignore"
       end
 
+      file :rspec do |file|
+        file.source = File.join(common_templates_dir, 'dotrspec')
+        file.destination = ".rspec"
+      end
+
       directory :test_dir do |directory|
         dir = testing_framework == :rspec ? "spec" : "test"
         directory.source      = dir
