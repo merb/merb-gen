@@ -8,6 +8,5 @@ Merb::Config.setup(
 Merb.environment = Merb::Config[:environment]
 Merb.root        = Merb::Config[:merb_root]
 
-Merb::BootLoader.run 
-
-run Merb::Rack::Application.new
+Merb::BootLoader.run
+run Merb::Config[:app]
