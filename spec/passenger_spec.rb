@@ -1,20 +1,18 @@
 require 'spec_helper'
 
-describe Merb::Generators::PassengerGenerator do
-  
+describe Merb::Generators::Passenger do
+
   describe "templates" do
-    before(:each) do
-      @generator = Merb::Generators::PassengerGenerator.new('/tmp', {})
+    before :all  do
+      @generator = create_generator(Merb::Generators::Passenger, temp_app_name)
     end
 
-    it "should create a config.ru file" do
-      @generator.should create('/tmp/config.ru')
-    end
-    
-    it "should render templates successfully" do
-      lambda { @generator.render! }.should_not raise_error
-    end
-    
+    after_generator_spec
+
+    it_should_generate
+
+    it_should_create 'config.ru'
+
   end
-  
+
 end

@@ -4,10 +4,6 @@ module Merb
   module Generators
 
     class NamespacedGenerator < NamedGenerator
-      # @note Currently this is not inherited, it will have to be declared
-      # in each generator that inherits from this.
-      first_argument :name, :required => true
-
       def modules
         chunks[0..-2]
       end
@@ -30,6 +26,10 @@ module Merb
 
       def base_path
         File.join(*snake_cased_chunks[0..-2])
+      end
+
+      def base_path_with_name
+        File.join(base_path, file_name)
       end
 
       protected

@@ -1,5 +1,137 @@
 #!/usr/bin/env ruby
 
+#TODO: remove for production
+lib = File.expand_path('../../../merb-core/lib', __FILE__)
+$LOAD_PATH.unshift(lib) if File.directory?(lib)
+
+lib = File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift(lib) if File.directory?(lib)
+
+require 'rubygems'
+require 'bundler/setup'
+#END TODO
+
 require 'merb-gen'
 
-Merb::Generators.run_cli(Dir.pwd, 'merb-gen', Merb::VERSION, ARGV)
+DEFAULT_NAMESPACE = 'app'
+GENERATOR_SCOPE = 'merb-gen'.freeze
+GENERATOR_FILENAME = 'Generators'.freeze
+
+module Merb::Generators
+  # Binding to run external Generator files in.
+  #
+  # The main purpose here is to provide the "top-level" #scope method in
+  # a somewhat flexible and non-polluting way.
+  class GenfileScope
+    def self.new_binding(name = ::GENERATOR_SCOPE)
+      s = self.new(name)
+      s.get_binding
+    end
+
+    def scope(name, &block)
+      block.call if name == @name
+    end
+
+    def get_binding
+      binding
+    end
+
+    private
+
+    def initialize(name)
+      @name = name
+      @name.freeze
+    end
+  end
+end
+
+$shell = Thor::Base.shell.new
+
+# find other gems with Generator files
+begin
+  Gem.source_index.latest_specs(true).map(&:full_gem_path).inject([]) do |files, gem_path|
+    search_path = File.join(gem_path, GENERATOR_FILENAME)
+
+    result_string = $shell.set_color('No', :red)
+    if File.exist?(search_path)
+      files << search_path
+      result_string = $shell.set_color('Yes', :green)
+    end
+
+    $shell.say(
+      "#{$shell.set_color('Searching path:', :bold)} #{search_path} #{result_string}",
+      :yellow
+    ) if $DEBUG
+
+    files
+  end.each do |gen_path|
+    begin
+      eval File.read(gen_path), Merb::Generators::GenfileScope.new_binding, gen_path, 1
+    rescue Exception => ex
+      $shell.say(
+        "Failed to import generator description from #{gen_path}: #{ex.message} (#{ex.class})",
+        :yellow
+      )
+    end
+  end
+rescue Exception => ex
+  $shell.say(
+    "Failed to import generator descriptions from installed gems: #{ex.message} (#{ex.class})",
+    :yellow
+  )
+
+  raise
+end
+
+task = ARGV.shift
+argsplit_idx = ARGV.index('--')
+generator_args = argsplit_idx.nil? ? [] : ARGV.slice!((argsplit_idx)..-1)[1..-1]
+
+if task.nil? || ['-T', '--list'].include?(task)
+  $shell.say "Available tasks:", :bold
+
+  $shell.print_table(
+    Merb::Generators.generators.map {|name, klass|
+      [name, klass.desc.each_line.map(&:strip).join(' ')]
+    }.sort {|a, b|
+      a.first <=> b.first
+    }.map {|row|
+      name, klass = row
+
+      name = if name =~ /\A(#{DEFAULT_NAMESPACE}:)(.+)/
+               "#{$1}#{$shell.set_color($2, :bold)}"
+             else
+               $shell.set_color(name, :bold)
+             end
+
+      [name, klass]
+    },
+    :ident => 2
+  )
+
+  $shell.say "#{$/}The default namespace is \"#{DEFAULT_NAMESPACE}\".#{$/ * 2}" <<
+             "Configuration options (separate from generator options with '--'):"
+
+  $shell.print_table(
+    [
+      ['--no-boot', 'Do not attempt to boot the merb stack in the current working directory.']
+    ],
+    :ident => 2
+  )
+
+  exit
+else
+  begin
+    klass = Merb::Generators.generators[task] || Merb::Generators.generators["#{DEFAULT_NAMESPACE}:#{task}"]
+
+    raise "No such task: #{task}" if klass.nil?
+
+    config = {:shell => $shell}
+    config.merge!({:no_merb_load => true}) if generator_args.include?('--no-boot')
+
+    klass.start(ARGV, config)
+  rescue Exception => ex
+    $shell.say "#{$shell.set_color('Error:', :red, true)} #{ex.message} (#{ex.class})"
+    raise if $DEBUG
+  end
+end

@@ -1,5 +1,9 @@
 TODO:
-Fix LICENSE with your name
-Fix Rakefile with your name and contact info
-Add your code to lib/<%= base_name %>.rb
-Add your Merb rake tasks to lib/<%= base_name %>/merbtasks.rb
+
+* Fix LICENSE with your name
+* Fix Rakefile with your name and contact info
+* Add your code to lib/<%= base_name %>.rb
+* Add your Merb rake tasks to lib/<%= base_name %>/merbtasks.rb
+<% if options[:bin] -%>
+* Create the application binary in bin/<%= base_name %>
+<% end -%>

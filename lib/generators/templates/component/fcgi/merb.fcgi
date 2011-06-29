@@ -10,10 +10,10 @@ unless ENV["INLINEDIR"] || ENV["HOME"]
   tmpdir = merb_root / "tmp"
   unless File.directory?(tmpdir)
     Dir.mkdir(tmpdir)
-  end                
+  end
   ENV["INLINEDIR"] = tmpdir
 end
-   
+
 # start merb with the fcgi adapter, add options or change the log dir here
 Merb.start(:adapter => 'fcgi',
            :merb_root => merb_root,

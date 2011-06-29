@@ -1,28 +1,19 @@
 # encoding: UTF-8
 
 module Merb::Generators
-  
-  class HelperGenerator < NamespacedGenerator
+  class Helper < NamespacedGenerator
 
-    def self.source_root
-      File.join(super, 'component', 'helper')
+    include AppGeneratorHelpers
+
+    source_root(template_base('component/helper'))
+
+    desc 'Generates a new helper.'
+
+    class_option_for :testing_framework
+
+    def create_helper
+      template 'app/helpers/%file_name%_helper.rb', File.join('app/helpers', base_path, "#{file_name}_helper.rb")
     end
-    
-    desc <<-DESC
-      Generates a new helper.
-    DESC
-    
-    option :testing_framework, :desc => 'Testing framework to use (one of: rspec, test_unit)'
-    
-    first_argument :name, :required => true, :desc => "helper name"
-    
-    template :helper do |template|
-      template.source = 'app/helpers/%file_name%_helper.rb'
-      template.destination = "app/helpers" / base_path / "#{file_name}_helper.rb"
-    end
-    
+
   end
-  
-  add :helper, HelperGenerator
-  
 end

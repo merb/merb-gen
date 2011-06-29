@@ -1,17 +1,15 @@
 # encoding: UTF-8
 
 module Merb::Generators
-  class PassengerGenerator < AppGenerator
-    
-    desc <<-DESC
-      Generates the configuration files needed to run Merb with Phusion Passenger.
-    DESC
-    
-    def self.source_root
-      File.join(super, 'application', 'merb_stack')
+  class Passenger < Generator
+
+    source_root(template_base('application/merb_stack'))
+
+    desc 'Generates the configuration files needed to run Merb with Phusion Passenger.'
+
+    def create_passenger
+      copy_file 'config.ru'
     end
 
-    file :config, "config.ru"
   end
-  add :passenger, PassengerGenerator
 end

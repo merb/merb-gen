@@ -1,5 +1,5 @@
 # Sets the default handler for FastCGI scripts
-AddHandler fastcgi-script .fcgi               
+AddHandler fastcgi-script .fcgi
 
 # If Apache2 is used together with mod_fcgid,
 # uncomment the line below and comment in the line 

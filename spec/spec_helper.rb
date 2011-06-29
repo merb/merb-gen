@@ -11,17 +11,129 @@ require "merb-gen"
 # Satisfies Autotest and anyone else not using the Rake tasks
 require 'rspec'
 
-# Templater spec support
-require 'templater/spec/helpers'
-
 Merb.disable(:initfile)
 
+require 'tmpdir'
+
+module Merb
+  module Test
+    class SpecThorShell < Thor::Shell::Basic
+      Answers = {}
+
+      def initialize(answers = {})
+        Answers.merge!(answers)
+      end
+
+      # Map questions to entries in Answers.
+      #
+      # This covers #yes? and #no?
+      def ask(statement, color=nil)
+        raise ArgumentError.new("Expected a stored answer for statement #{statement.inspect}") unless Answers.has_key?(statement)
+        Answers[statement]
+      end
+
+      def error(statement)
+      end
+
+      # Always overwrite files.
+      def file_collision(destination)
+        true
+      end
+
+      def print_table(*args)
+      end
+
+      def print_wrapped(*args)
+      end
+
+      def say(*args)
+      end
+
+      def say_status(*args)
+      end
+    end
+
+    module AppGenerationHelpers
+
+      def app_path(*frags)
+        File.join(@app_base_dir, *frags)
+      end
+
+      def app_name
+        @app_name
+      end
+
+      def temp_app_name
+        "Temp#{Process.pid}"
+      end
+
+      # Build generator writing to temporary path.
+      #
+      # You can pass a `:config` key in options which will be used as the
+      # `config` parameter to the Generator. By default, created generators
+      # will use a SpecThorShell instance which mutes all output and does
+      # not reply to questions. If you need to test a generator which
+      # depends on user input, pass an instance with the proper answers
+      # as the `:shell` option.
+      def create_generator(klass, name, options={})
+        raise "Will not create a new generator, already using one with temp dir #{@app_spec_base_dir}" unless @app_spec_base_dir.nil?
+
+        dir = Dir.mktmpdir
+
+        @app_name = name.is_a?(Array) ? name.first : name
+        @app_spec_base_dir = dir
+        @app_base_dir = File.join(@app_spec_base_dir, @app_name)
+
+        config = options.delete(:config) || {}
+        options[:shell] ||= SpecThorShell.new
+
+        klass.new(name.is_a?(Array) ? name : [name], config, {:destination_root => @app_base_dir}.merge(options))
+      end
+
+      def after_generator_spec(_when = :all)
+        after _when do
+          FileUtils.remove_entry_secure @app_spec_base_dir unless @app_spec_base_dir.nil?
+          @app_spec_base_dir = nil
+        end
+      end
+
+      # Call before specs depending on generated content.
+      #
+      # Runs the generator to a temporary directory, creating all files.
+      def it_should_generate(_which = nil)
+        it "should create the application" do
+          lambda do
+            if _which.nil?
+              @generator.invoke_all
+            else
+              @generator.invoke _which
+            end
+          end.should_not raise_error
+        end
+      end
+
+      # Check file generation.
+      #
+      # @param [String*] files Paths to check for existence. Relative to the
+      #   generator root.
+      def it_should_create(*files)
+        files.each do |fname|
+          it "should create #{fname}" do
+            File.exist?(app_path(fname)).should be_true
+          end
+        end
+      end
+
+    end
+  end
+end
+
 RSpec.configure do |config|
-  config.include Templater::Spec::Helpers
+  include Merb::Test::AppGenerationHelpers
 end
 
 shared_examples_for "app generator" do
-  
+
   describe "#gems_for_orm" do
     [:activerecord, :sequel, :datamapper].each do |orm|
       it "should generate DSL for #{orm} ORM plugin" do

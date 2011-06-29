@@ -1,4 +1,4 @@
 <%= base_name %>
-<%= "=" * base_name.size %>
+<%= "=" * base_name.length %>
 
 A plugin for the Merb framework that provides ...

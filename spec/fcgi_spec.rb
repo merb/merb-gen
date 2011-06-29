@@ -1,24 +1,16 @@
 require 'spec_helper'
 
-describe Merb::Generators::FcgiGenerator do
-  
-  describe "templates" do
-    before(:each) do
-      @generator = Merb::Generators::FcgiGenerator.new('/tmp', {})
-    end
-
-    it "should create a .htaccess file within public/" do
-      @generator.should create('/tmp/public/.htaccess')
-    end
-
-    it "should create a merb.fcgi file within public/" do
-      @generator.should create('/tmp/public/.htaccess')
-    end
-    
-    it "should render templates successfully" do
-      lambda { @generator.render! }.should_not raise_error
-    end
-    
+describe Merb::Generators::Fcgi do
+  before :all do
+    @generator = create_generator(Merb::Generators::Fcgi, temp_app_name)
   end
-  
+
+  after_generator_spec
+
+  it_should_generate
+
+  it_should_create(
+    'public/.htaccess',
+    'public/merb.fcgi'
+  )
 end

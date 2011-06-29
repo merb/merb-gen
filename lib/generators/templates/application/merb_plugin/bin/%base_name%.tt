@@ -1,0 +1,5 @@
+#!/bin/env ruby
+
+# encoding: UTF-8
+
+puts "This is supposed to be the binary provided by the <% name %> Merb plugin."

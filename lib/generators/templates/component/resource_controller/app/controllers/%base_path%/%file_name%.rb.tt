@@ -1,6 +1,6 @@
 <% with_modules(modules) do -%>
 class <%= class_name %> < Application
-  
+
   # GET /<%= resource_path %>
   def index
     render

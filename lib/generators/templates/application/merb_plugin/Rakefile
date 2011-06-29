@@ -23,8 +23,8 @@ spec = Gem::Specification.new do |s|
   s.homepage = HOMEPAGE
   s.add_dependency('merb-core', '>= <%= Merb::VERSION %>')
   s.require_path = 'lib'
-  s.files = %w(LICENSE README Rakefile TODO) + Dir.glob("{lib,spec<%= bin ? ',bin' : '' %>}/**/*")
-  <% if bin %>
+  s.files = %w(LICENSE README Rakefile TODO) + Dir.glob("{lib,spec<%= options[:bin] ? ',bin' : '' %>}/**/*")
+  <% if options[:bin] %>
   s.bindir = "bin"
   s.executables = [GEM_NAME]
   <% end %>
