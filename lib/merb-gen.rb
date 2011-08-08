@@ -29,7 +29,3 @@ require File.expand_path('../generators/resource',            __FILE__)
 require File.expand_path('../generators/layout',              __FILE__)
 require File.expand_path('../generators/passenger',           __FILE__)
 require File.expand_path('../generators/fcgi',                __FILE__)
-
-Merb.generators.each do |file|
-  require file
-end
